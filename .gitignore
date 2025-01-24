@@ -1,0 +1,21 @@
+# System files
+.DS_Store
+Thumbs.db
+
+# Node modules (for Node.js projects)
+node_modules/
+
+# Build and distribution directories
+dist/
+build/
+
+# Log files
+*.log
+
+# Certificate Authority directory (optional)
+ca/
+
+# Generated certificates (optional)
+*.pem
+*.key
+*.csr

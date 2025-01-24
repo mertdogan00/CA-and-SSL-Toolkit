@@ -1,0 +1,16 @@
+server {
+    listen 443 ssl;
+    server_name mysite.com;
+
+    ssl_certificate /path/to/mysite.com.crt;  # Replace with the actual path
+    ssl_certificate_key /path/to/mysite.com.key;  # Replace with the actual path
+    ssl_protocols TLSv1.2 TLSv1.3;
+    ssl_ciphers HIGH:!aNULL:!MD5;
+    ssl_prefer_server_ciphers on;
+
+    location / {
+        root /var/www/mysite;
+        index index.html;
+    }
+}
+
