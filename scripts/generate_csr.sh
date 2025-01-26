@@ -1,12 +1,14 @@
 #!/bin/bash
 
-# Generate private key for a specific domain
-echo "🔑 Generating private key for domain.com..."
-openssl genrsa -out ../examples/domain.com.key 2048
+# CSR and Private Key Generation Script for GlusterFS Server (e.g., gluster1)
 
-# Generate CSR for the domain
-echo "📄 Generating CSR for domain.com..."
-openssl req -new -key ../examples/domain.com.key -out ../examples/domain.com.csr \
-  -subj "/C=XX/ST=State/L=City/O=Organization/OU=Department/CN=domain.com"
+# Generate a private key
+echo "🔑 Generating a private key for GlusterFS server..."
+openssl genrsa -out ../crt/server.key 2048
 
-echo "🎉 CSR and private key for domain.com created successfully!"
+# Create a CSR (Certificate Signing Request)
+echo "📄 Creating a CSR for the GlusterFS server..."
+openssl req -new -key ../crt/server.key -out ../crt/server.csr \
+  -subj "/C=XX/ST=YourState/L=YourCity/O=YourOrganization/OU=YourDepartment/CN=gluster1"
+
+echo "🎉 CSR and private key successfully generated for the GlusterFS server!"
