@@ -1,32 +1,29 @@
 #!/bin/bash
 
-# CSR Signing Script for Certificates
-CSR_PATH="../crt/example.csr"               # Path to the CSR file to be signed
-OUTPUT_CERT="../crt/example.pem"           # Path to the output certificate
-INTERMEDIATE_CA="../ca/intermediateCA.pem" # Intermediate Certificate (CA)
-INTERMEDIATE_KEY="../ca/intermediateCA.key" # Private key of the Intermediate CA
+# Certificate Verification Script
+CERT_PATH="../crt/example.pem"             # Certificate to be verified
+CA_CERT_PATH="../ca/ca_chain.pem"          # CA Chain (Intermediate + Root Certificates)
 
-# Check if the CSR file exists
-if [ ! -f "$CSR_PATH" ]; then
-  echo "❌ CSR file not found: $CSR_PATH"
+# Check if the certificate file exists
+if [ ! -f "$CERT_PATH" ]; then
+  echo "❌ Certificate file not found: $CERT_PATH"
   exit 1
 fi
 
-# Check if the Intermediate CA certificate and private key exist
-if [ ! -f "$INTERMEDIATE_CA" ] || [ ! -f "$INTERMEDIATE_KEY" ]; then
-  echo "❌ Missing Intermediate CA certificate or private key!"
+# Check if the CA chain file exists
+if [ ! -f "$CA_CERT_PATH" ]; then
+  echo "❌ CA Chain file not found: $CA_CERT_PATH"
   exit 1
 fi
 
-# Sign the CSR with the Intermediate CA
-echo "📄 Signing the CSR with the Intermediate Certificate Authority..."
-openssl x509 -req -in "$CSR_PATH" -CA "$INTERMEDIATE_CA" -CAkey "$INTERMEDIATE_KEY" -CAcreateserial \
-  -out "$OUTPUT_CERT" -days 365 -sha256
+# Verify the certificate
+echo "🔍 Verifying the certificate..."
+openssl verify -CAfile "$CA_CERT_PATH" "$CERT_PATH"
 
-# Output the result
-if [ -f "$OUTPUT_CERT" ]; then
-  echo "🎉 Certificate successfully created: $OUTPUT_CERT"
+# Verification result
+if [ $? -eq 0 ]; then
+  echo "🎉 Certificate successfully verified: $CERT_PATH"
 else
-  echo "❌ Certificate creation failed!"
+  echo "❌ Certificate verification failed!"
   exit 1
 fi
