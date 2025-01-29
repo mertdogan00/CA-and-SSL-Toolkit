@@ -1,14 +1,18 @@
 #!/bin/bash
 
-# CSR and Private Key Generation Script for GlusterFS Server (e.g., gluster1)
+# Generate a CSR and private key for a server
 
-# Generate a private key
-echo "🔑 Generating a private key for GlusterFS server..."
-openssl genrsa -out ../crt/server.key 2048
+# Define variable
+variable="server_1"
 
-# Create a CSR (Certificate Signing Request)
-echo "📄 Creating a CSR for the GlusterFS server..."
-openssl req -new -key ../crt/server.key -out ../crt/server.csr \
-  -subj "/C=XX/ST=YourState/L=YourCity/O=YourOrganization/OU=YourDepartment/CN=gluster1"
+# Generate private key
+echo "🔑 Generating private key for $variable..."
+openssl genrsa -out ../crt/$variable.key 2048
 
-echo "🎉 CSR and private key successfully generated for the GlusterFS server!"
+# Create CSR
+echo "📄 Creating CSR for $variable..."
+openssl req -new -key ../crt/$variable.key -out ../crt/$variable.csr \
+  -subj "/C=US/ST=California/L=San Francisco/O=ExampleCorp/OU=IT/CN=$variable"
+
+echo "🎉 CSR and private key for $variable have been successfully created!"
+
