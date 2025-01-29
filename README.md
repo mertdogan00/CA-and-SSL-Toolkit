@@ -48,7 +48,6 @@ CA-and-SSL-Toolkit/
 │   ├── rootCA.pem            # Root CA certificate
 │   ├── intermediateCA.key    # Intermediate CA private key
 │   ├── intermediateCA.pem    # Intermediate CA certificate
-│   └── ca_database/          # Issued and revoked certificates database
 ├── examples/                 # Usage examples
 │   ├── site_csr_example.sh   # CSR generation for a site
 │   ├── site_cert_example.sh  # Certificate signing example
